@@ -27,11 +27,11 @@ export class HomePage {
   }
 
   addItem() {
-    this.router.navigateByUrl('/item-detail');
+    this.router.navigateByUrl('/page-detail');
   }
 
   edititem(item: Item) {
-    this.router.navigateByUrl(`/item-detail/${item.id}`);
+    this.router.navigateByUrl(`/page-detail/${item.id}`);
   }
 
   async deleteItem(id: string) {
