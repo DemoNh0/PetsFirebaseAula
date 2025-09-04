@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DataService, Item } from '../services/data';
+import { DataService, Pet } from '../services/data';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
@@ -12,7 +12,8 @@ import { AlertController } from '@ionic/angular';
 })
 export class HomePage {
 
-  items: Item[] = [];
+  pets: Pet[] = [];
+  cuidadores: Cuidador[] = [];
 
   constructor(
     private dataService: DataService,
@@ -21,23 +22,29 @@ export class HomePage {
   ) {}
 
   ngOnInit() {
-    this.dataService.getItems().subscribe(res => {
-      this.items = res;
+    this.dataService.getPets().subscribe(res => {
+      this.pets = res;
+    });
+        this.dataService.getCuidador().subscribe(res => {
+      this.cuidador = res;
     });
   }
 
-  addItem() {
+
+//Pet
+
+  addPet() {
     this.router.navigateByUrl('/page-detail');
   }
 
-  edititem(item: Item) {
-    this.router.navigateByUrl(`/page-detail/${item.id}`);
+  editPet(item: Pet) {
+    this.router.navigateByUrl(`/page-detail/${pet.id}`);
   }
 
-  async deleteItem(id: string) {
+    async deletePet(id: string) {
     const alert = await this.alertController.create({
       header: 'Confimar exclusão',
-      message: 'Tem erteza que deseja excluir este item?',
+      message: 'Tem erteza que deseja excluir este Pet?',
       buttons: [
         {
           text: 'Cancelar',
@@ -47,7 +54,39 @@ export class HomePage {
         {
           text: 'Excluir',
           handler: () => {
-            this.dataService.deleteItem(id);
+            this.dataService.deletePet(id);
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+
+//Cuidador
+
+    addCuidador() {
+    this.router.navigateByUrl('/cuidador-page');
+  }
+
+  edititem(item: Pet) {
+    this.router.navigateByUrl(`/cuidador-page/${cuidador.id}`);
+  }
+
+  async deleteCuidador(id: string) {
+    const alert = await this.alertController.create({
+      header: 'Confimar exclusão',
+      message: 'Tem erteza que deseja excluir este Cuidador?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        },
+        {
+          text: 'Excluir',
+          handler: () => {
+            this.dataService.deleteCuidador(id);
           },
         },
       ],

@@ -16,10 +16,22 @@ import {
 import { Observable } from 'rxjs';
 
 //
-export interface Item {
+export interface Pet {
   id?: string;
   name: string;
-  description: string;
+  species: string;
+  race: string;
+  age: string;
+  obs: string;
+  createdAt?: number;
+}
+
+export interface Cuidador {
+  id?: string;
+  name: string;
+  phone: string;
+  experience: number;
+  specialties: string;
   createdAt?: number;
 }
 
@@ -32,43 +44,88 @@ export class DataService {
   }
 
   //
-  getItems(): Observable<Item[]> {
+  getPets(): Observable<Pet[]> {
     //
-    const itemsCollectionRef = collection(this.firestore, 'items');
+    const petsCollectionRef = collection(this.firestore, 'pets');
     //
-    const q = query(itemsCollectionRef, orderBy('createdAt', 'desc'));
+    const q = query(petsCollectionRef, orderBy('createdAt', 'desc'));
     //
-    return collectionData(q, { idField: 'id' }) as Observable<Item[]>;
+    return collectionData(q, { idField: 'id' }) as Observable<Pet[]>;
   }
 
   //
-  getItem(id: string): Observable<Item | undefined> {
+  getPet(id: string): Observable<Pet | undefined> {
     //
-    const itemDocRef = doc(this.firestore, `items/${id}`);
+    const petDocRef = doc(this.firestore, `pets/${id}`);
     //
-    return docData(itemDocRef, { idField: 'id' }) as Observable<Item | undefined>;
+    return docData(petDocRef, { idField: 'id' }) as Observable<Pet | undefined>;
   }
 
   //
-  addItem(item: Item) {
-    const itemsCollectionRef = collection(this.firestore, 'items');
+  addPet(pets: Pet) {
+    const petsCollectionRef = collection(this.firestore, 'pets');
     //
-    return addDoc(itemsCollectionRef, { ...item, createdAt: Date.now() });
+    return addDoc(petsCollectionRef, { ...pets, createdAt: Date.now() });
   }
 
   //
-  updateItem(item: Item) {
+  updatePet(pets: Pet) {
     //
-    const itemDocRef = doc(this.firestore, `items/${item.id}`);
+    const petDocRef = doc(this.firestore, `pets/${pets.id}`);
     //
-    return updateDoc(itemDocRef, { name: item.name, description: item.description });
+    return updateDoc(petDocRef, { name: pets.name, species: pets.species, race: pets.race, age: pets.age, obs: pets.obs });
   }
 
   //
-  deleteItem(id: string) {
+  deletePet(id: string) {
     //
-    const itemDocRef = doc(this.firestore, `items/${id}`);
+    const petDocRef = doc(this.firestore, `pets/${id}`);
     //
-    return deleteDoc(itemDocRef);
+    return deleteDoc(petDocRef);
   }
+
+
+// Cuidador
+
+  getCuidadores(): Observable<Cuidador[]> {
+    //
+    const cuidadoresCollectionRef = collection(this.firestore, 'cuidadores');
+    //
+    const q = query(cuidadoresCollectionRef, orderBy('createdAt', 'desc'));
+    //
+    return collectionData(q, { idField: 'id' }) as Observable<Cuidador[]>;
+  }
+
+  //
+  getCuidador(id: string): Observable<Cuidador | undefined> {
+    //
+    const cuidadoresCollectionRef = doc(this.firestore, `cuidadores/${id}`);
+    //
+    return docData(cuidadoresCollectionRef, { idField: 'id' }) as Observable<Cuidador | undefined>;
+  }
+
+  //
+  addCuidador(cuidador: Cuidador) {
+    const itemsCollectionRef = collection(this.firestore, 'cuidadores');
+    //
+    return addDoc(itemsCollectionRef, { ...cuidador, createdAt: Date.now() });
+  }
+
+  //
+  updateCuidador(cuidador: Cuidador) {
+    //
+    const cuidadorDocRef = doc(this.firestore, `items/${cuidador.id}`);
+    //
+    return updateDoc(cuidadorDocRef, { name: cuidador.name, phone: cuidador.phone, experience: cuidador.experience, specialties: cuidador.specialties });
+  }
+
+  //
+  deleteCuidador(id: string) {
+    //
+    const cuidadorDocRef = doc(this.firestore, `cuidadores/${id}`);
+    //
+    return deleteDoc(cuidadorDocRef);
+  }
+
 }
+

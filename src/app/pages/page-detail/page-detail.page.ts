@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataService, Item } from 'src/app/services/data';
+import { DataService, Pet } from 'src/app/services/data';
 import { LoadingController, ToastController } from '@ionic/angular';
 
 
@@ -15,47 +15,50 @@ export class PageDetailPage implements OnInit {
 
   //
   //
-  item: Item = {
+  pet: Pet = {
     name: '',
-    description: ''
+    species: '',
+    race:'',
+    age:'',
+    obs:'',
   };
   //
-  itemId: string | null = null;
+  petId: string | null = null;
   //
-  isNewItem = true;
+  isNewPet = true;
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router,
     private loadingController: LoadingController, private toastController: ToastController) { }
 
   ngOnInit() {
-    this.itemId = this.route.snapshot.paramMap.get('id');
+    this.petId = this.route.snapshot.paramMap.get('id');
     //
-    if (this.itemId) {
+    if (this.petId) {
       //
-      this.isNewItem = false;
+      this.isNewPet = false;
       //
-      this.loadItem();
+      this.loadpet();
     }
   }
-  async loadItem() {
+  async loadpet() {
     //
     const loading = await this.loadingController.create({
-      message: 'Carregando item...'
+      message: 'Carregando pet...'
     });
     //
     await loading.present();
     //
     //
-    this.dataService.getItem(this.itemId!).subscribe(res => {
+    this.dataService.getPet(this.petId!).subscribe(res => {
       //
       loading.dismiss();
       //
       if(res) {
         //
-        this.item = res;
+        this.pet = res;
       } else {
         //
-        this.presentToast('Item não encontrado!', 'danger');
+        this.presentToast('Pet não encontrado!', 'danger');
         //
         this.router.navigateByUrl('/home');
       }
@@ -63,49 +66,49 @@ export class PageDetailPage implements OnInit {
       //
       loading.dismiss();
       //
-      this.presentToast('Erro ao carregar item.', 'danger');
+      this.presentToast('Erro ao carregar pet.', 'danger');
       //
       this.router.navigateByUrl('/home');
     });
   }
-  async saveItem() {
+  async savePet() {
     //
     const loading = await this.loadingController.create({
-      message: 'Salvando item...'
+      message: 'Salvando pet...'
     });
     //
     await loading.present();
 
     //
-    if (this.isNewItem) {
+    if (this.isNewPet) {
       //
-      this.dataService.addItem(this.item).then(() => {
+      this.dataService.addPet(this.pet).then(() => {
         //
         loading.dismiss();
         //
-        this.presentToast('Item adicionado com sucesso!', 'success');
+        this.presentToast('pet adicionado com sucesso!', 'success');
         //
         this.router.navigateByUrl('/home');
       }, err => {//
         //
         loading.dismiss();
         //
-        this.presentToast('Erro ao adicionar item.', 'danger');
+        this.presentToast('Erro ao adicionar pet.', 'danger');
       });
     } else { //
       //
-      this.dataService.updateItem(this.item).then(() => {
+      this.dataService.updatePet(this.pet).then(() => {
         //
         loading.dismiss();
         //
-        this.presentToast('Item atualizado com sucesso!', 'success');
+        this.presentToast('pet atualizado com sucesso!', 'success');
         //
         this.router.navigateByUrl('/home');
       }, err => { //
         //
         loading.dismiss();
         //
-        this.presentToast('Erro ao atualizar item.', 'danger');
+        this.presentToast('Erro ao atualizar pet.', 'danger');
       });
     }
   }

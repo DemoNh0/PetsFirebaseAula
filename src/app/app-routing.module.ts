@@ -18,7 +18,11 @@ const routes: Routes = [
   {
     path: 'page-detail/:id',
     loadChildren: () => import('./pages/page-detail/page-detail.module').then( m => m.PageDetailPageModule)
+  },  {
+    path: 'cuidador-page',
+    loadChildren: () => import('./cuidador-page/cuidador-page.module').then( m => m.CuidadorPagePageModule)
   }
+
 ];
 
 @NgModule({

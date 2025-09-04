@@ -1,11 +1,17 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      Meus Itens
+Gerenciar Pets e Cuidadores
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="addItem()">
-        <ion-icon name="add"></ion-icon>
+      <ion-button (click)="addPet()">
+        Adicionar PETㅤ
+        <ion-icon name="fish-outline"></ion-icon>
+      </ion-button>
+            <ion-button (click)="addCuidador()">
+              Adicionar Cuidadorㅤ
+
+        <ion-icon name="medkit-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -13,21 +19,25 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item *ngIf="items.length === 0">
-      <ion-label>Nenhum item cadastrado ainda.</ion-label>
+    <ion-item *ngIf="pets.length === 0">
+      <ion-label>Nenhum Pet ou Cuidador Cadastrado</ion-label>
     </ion-item>
 
-    <ion-item-sliding *ngFor="let item of items">
-      <ion-item lines="full" button (click)="edititem(item)">
+    <ion-item-sliding *ngFor="let pet of pets">
+      <ion-item lines="full" button (click)="edititem(pet)">
         <ion-label>
-          <h2>{{ item.name }}</h2>
-          <p>{{ item.description }}</p>
+          <h2>{{ pet.name }}</h2>
+          <p>{{ pet.species }}</p>
+          <p>{{ pet.race }}</p>
+          <p>{{ pet.age }}</p>
+          <p>{{ pet.obs }}</p>
+
         </ion-label>
       </ion-item>
 
       <ion-item-options side="end">
         <!-- A exclamação aqui indica que o item.id jamais será nulo -->
-         <ion-item-option color="danger" (click)="deleteItem(item.id!)">
+         <ion-item-option color="danger" (click)="deleteItem(pet.id!)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
          </ion-item-option>
       </ion-item-options>

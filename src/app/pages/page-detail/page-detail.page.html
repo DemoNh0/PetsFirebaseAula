@@ -3,21 +3,37 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ isNewItem ? 'Adicionar Novo Item' : 'Editar Item' }}</ion-title>
+    <ion-title>{{ isNewPet ? 'Adicionar Novo Pet' : 'Editar Pet' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form #form="ngForm" (ngSubmit)="saveItem()">
+  <form #form="ngForm" (ngSubmit)="savePet()">
     <ion-item>
       <ion-label position="floating">Nome</ion-label>
-      <ion-input type="text" [(ngModel)]="item.name" name="name" required></ion-input>
+      <ion-input type="text" [(ngModel)]="pet.name" name="name" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Nome</ion-label>
-      <ion-textarea rows="4" [(ngModel)]="item.description" name="description"></ion-textarea>
+      <ion-label position="floating">Especie</ion-label>
+      <ion-textarea rows="4" [(ngModel)]="pet.species" name="Especie"></ion-textarea>
     </ion-item>
+
+        <ion-item>
+      <ion-label position="floating">Idade</ion-label>
+      <ion-textarea rows="4" [(ngModel)]="pet.age" name="Idade"></ion-textarea>
+    </ion-item>
+
+        <ion-item>
+      <ion-label position="floating">Raça</ion-label>
+      <ion-textarea rows="4" [(ngModel)]="pet.race" name="raça"></ion-textarea>
+    </ion-item>
+
+            <ion-item>
+      <ion-label position="floating">Observação</ion-label>
+      <ion-textarea rows="4" [(ngModel)]="pet.obs" name="Observacao"></ion-textarea>
+    </ion-item>
+
 
     <ion-button expand="full" type="submit" [disabled]="!form.valid" class="ion-margin-top">
       Salvar
